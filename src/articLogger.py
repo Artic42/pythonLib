@@ -31,7 +31,7 @@ class log:
         self.logFile.write(f"Log file created at {dateSring} with name {self.logName}\n")
     
     def log(self, message, mask = INFO_MASK):
-        maskName = getMaskName(mask)
+        maskName = self.getMaskName(mask)
         if mask & self.mask:
             self.writeLog(message, maskName)
     
