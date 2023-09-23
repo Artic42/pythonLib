@@ -13,8 +13,15 @@ COMMS_MASK= 0b00011000
 DEBUG_MASK = 0b01000000
 DEFAULT_MASK = INFO_MASK | COMMS_MASK | ERROR_MASK | HERMES_MASK
 
+global mainLogger
 
-class log:
+def setMainLogger(logObject):
+    mainLogger = logObject
+
+def addEntry(message, mask = INFO_MASK):
+    mainLogger.writeLog(message, mask)
+
+class Log:
     def __init__(self, logName, maxLines = 1000, logPath = "logs", mask = DEFAULT_MASK):
         self.logName = logName
         self.maxLines = maxLines

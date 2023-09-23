@@ -1,13 +1,8 @@
 from datetime import datetime
 
-def YYYYMMDD():
-    return 1
-
-def DDMMYYYY():
-    return 2
-
-def MMDDYYYY():
-    return 3
+YYYYMMDD = 1
+DDMMYYYY = 2
+MMDDYYYY = 3
 
 class createDate:
     def __init__(self, mode):
@@ -47,15 +42,15 @@ class createDate:
         self.calculateTime()
     
     def calculateDate(self):
-        if self.mode == YYYYMMDD():
+        if self.mode == YYYYMMDD:
             self.year = int(self.dateString[0:4])
             self.month = int(self.dateString[5:7])
             self.day = int(self.dateString[8:10])
-        elif self.mode == DDMMYYYY():
+        elif self.mode == DDMMYYYY:
             self.day = int(self.dateString[0:2])
             self.month = int(self.dateString[3:5])
             self.year = int(self.dateString[6:10])
-        elif self.mode == MMDDYYYY():
+        elif self.mode == MMDDYYYY:
             self.month = int(self.dateString[0:2])
             self.day = int(self.dateString[3:5])
             self.year = int(self.dateString[6:10])
@@ -68,17 +63,21 @@ class createDate:
         self.second = int(self.timeString[6:8])
         
     def calculateStringDate(self):
-        if self.mode == YYYYMMDD():
+        if self.mode == YYYYMMDD:
             self.dateString = str(self.year) + "/" + str(self.month) + "/" + str(self.day)
-        elif self.mode == DDMMYYYY():
+        elif self.mode == DDMMYYYY:
             self.dateString = str(self.day) + "/" + str(self.month) + "/" + str(self.year)
-        elif self.mode == MMDDYYYY():
+        elif self.mode == MMDDYYYY:
             self.dateString = str(self.month) + "/" + str(self.day) + "/" + str(self.year)
         else:
             raise ValueError("Invalid mode")
     
     def calculateStringTime(self):
         self.timeString = str(self.hour) + ":" + str(self.minute) + ":" + str(self.second)
+        
+    def setMode(self, mode):
+        self.mode = mode
+        self.calculateStringDate()
     
     
     ## Output values
@@ -112,6 +111,3 @@ class createDate:
     def getMode(self):
         return self.mode
     
-    def setMode(self, mode):
-        self.mode = mode
-        self.calculateStringDate()
