@@ -1,7 +1,9 @@
 import articLogger as logger
 import articFileUtils as fileUtils
 import testEngine as testEngine
+import time
 from testEngine import test
+
 
 
 def runTest():
@@ -11,7 +13,11 @@ def runTest():
     
 
 def runScenario1():
+    test.newScenario("Log create, close and masks")
     test11()
+    test12_15()
+    test16()
+    test.endScenario("Log create, close and masks")
 
 
 def test11():
@@ -29,8 +35,31 @@ def test11():
     del log1
     fileUtils.deleteFile(pathToLog)
     
-def test12():
-    pass
+def test12_15():
+    #Check if masks are changed correctly
+    log1 = logger.Log("logs", mask=logger.INFO_MASK)
+    test.testIfEqual(logger.INFO_MASK, log1.getMask(), "Checking mask value is INFO_MASK")
+    log1.setValueInMask(logger.DEBUG_MASK)
+    test.testIfEqual(logger.INFO_MASK | logger.DEBUG_MASK, log1.getMask(), "Checking mask value is INFO_MASK | DEBUG_MASK")
+    log1.unsetValueInMask(logger.DEBUG_MASK)
+    test.testIfEqual(logger.INFO_MASK, log1.getMask(), "Checking mask value is INFO_MASK")
+    log1.setMask(logger.DEBUG_MASK)
+    test.testIfEqual(logger.DEBUG_MASK, log1.getMask(), "Checking mask value is DEBUG_MASK")
+    logFilePath = log1.getLogFilePath()
+    log1.close()
+    fileUtils.deleteFile(logFilePath)
+    
+def test16():
+    log1 = logger.Log("logs", mask=logger.INFO_MASK, maxLines=2)
+    log1.log ("Just some log message1")
+    time.sleep(2)
+    log1.log ("Just some log message2")
+    log1.log ("Just some log message3")
+    test.testIfEqual(2, len(fileUtils.getFilesInDirectory("logs")), "Checking two log files are created")
+    for path in fileUtils.getFilesInDirectory("logs"):
+        fileUtils.deleteFile("logs/" + path)
+    
+    
     
 if __name__ == "__main__":
     runTest()

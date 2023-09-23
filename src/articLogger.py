@@ -1,4 +1,5 @@
 import dateTime
+import os
 
 if __name__ == "__main__":
     pass
@@ -34,9 +35,14 @@ class Log:
     def createLogFile(self):
         self.date.setToNow()
         dateSring = self.date.getDateTimePathFomat()
+        os.makedirs(self.logPath, exist_ok=True)
         self.logFilePath = self.logPath + "/" + self.logName + "_" + dateSring + ".log"
-        self.logFile = open(self.logFilePath, "w")
-        self.logFile.write(f"Log file created at {self.date.getDateTime()} with name {self.logName}\n")
+        if os.path.isfile(self.logFilePath):
+            self.logFile = open(self.logFilePath, "a")
+        else:
+            self.logFile = open(self.logFilePath, "w")
+            self.logFile.write(f"Log file created at {self.date.getDateTime()} with name {self.logName}\n")
+            self.lines = 0
     
     def log(self, message, mask = INFO_MASK):
         maskName = self.getMaskName(mask)
@@ -64,7 +70,6 @@ class Log:
         if self.lines >= self.maxLines:
             self.logFile.close()
             self.createLogFile()
-            self.lines = 0
     
     def setMask(self, mask):
         self.mask = mask

@@ -1,9 +1,20 @@
 import os
 
-
-
 def deleteFile(path):
     os.remove(path)
+    
+def createFile(path):
+    file = open (path, "r")
+    file.close()
+    
+def getFilesInDirectory(path):
+    return os.listdir(path)
+    
+def deleteDirectory(path):
+    os.rmdir(path)
+    
+def createDirectory(path):
+    os.makedirs(path, exist_ok=True)
 
 class FileIO:
     def __init__(self, path, readIt = False):

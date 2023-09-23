@@ -61,16 +61,16 @@ class createDate:
         
     def calculateStringDate(self):
         if self.mode == YYYYMMDD:
-            self.dateString = str(self.year) + "/" + str(self.month) + "/" + str(self.day)
+            self.dateString = str(self.year) + "/" + str(self.month).zfill(2) + "/" + str(self.day).zfill(2)
         elif self.mode == DDMMYYYY:
-            self.dateString = str(self.day) + "/" + str(self.month) + "/" + str(self.year)
+            self.dateString = str(self.day).zfill(2) + "/" + str(self.month).zfill(2) + "/" + str(self.year)
         elif self.mode == MMDDYYYY:
-            self.dateString = str(self.month) + "/" + str(self.day) + "/" + str(self.year)
+            self.dateString = str(self.month).zfill(2) + "/" + str(self.day).zfill(2) + "/" + str(self.year)
         else:
             raise ValueError("Invalid mode")
     
     def calculateStringTime(self):
-        self.timeString = str(self.hour) + ":" + str(self.minute) + ":" + str(self.second)
+        self.timeString = str(self.hour).zfill(2) + ":" + str(self.minute).zfill(2) + ":" + str(self.second).zfill(2)
         
     def setMode(self, mode):
         self.mode = mode
