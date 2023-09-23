@@ -1,6 +1,5 @@
 import articLogger as logger
 
-
 class testEngine:
     def __init__(self):
         self.passed = True
@@ -18,35 +17,56 @@ class testEngine:
             if test:
                 self.passCount += 1
                 print(f"Test {self.testCount} passed: {message}")
+                return 1
             else:
                 self.failCount += 1
                 print(f"Test {self.testCount} failed: {message}")
                 self.scenarioPassed = False
                 self.scenarioFailed= True
+                return 2
         else:
             self.skipCount += 1
             print(f"Test {self.testCount} skipped: {message}")
+            return 3
     
     def testIfFalse(self, test, message):
         self.testIfTrue(not test, message)
     
-    def testIfEqual(self, test1, test2, message):
-        self.testIfTrue(test1 == test2, message)
+    def testIfEqual(self, expected, testValue, message):
+        response = self.testIfTrue(expected == testValue, message)
+        if response == 2:
+            print(f"Expected value equal to {expected}")
+            print(f"Value equal to {testValue}")
     
-    def testIfNotEqual(self, test1, test2, message):
-        self.testIfTrue(test1 != test2, message)
+    def testIfNotEqual(self, expected, testValue, message):
+        response = self.testIftrue(expected != testValue, message)
+        if response == 2:
+            print(f"Expected value differen to {expected}")
+            print(f"Value equal to {testValue}")
     
-    def testIfGreater(self, test1, test2, message):
-        self.testIfTrue(test1 > test2, message)
+    def testIfGreater(self, expected, testValue, message):
+        response = self.testIftrue(expected > testValue, message)
+        if response == 2:
+            print(f"Expected value greater than {expected}")
+            print(f"Value equal to {testValue}")
     
-    def testIfGreaterEqual(self, test1, test2, message):
-        self.testIfTrue(test1 >= test2, message)
+    def testIfGreaterEqual(self, expected, testValue, message):
+        response = self.testIftrue(expected >= testValue, message)
+        if response == 2:
+            print(f"Expected value greater or equal than {expected}")
+            print(f"Value equal to {testValue}")
     
-    def testIfLess(self, test1, test2, message):
-        self.testIfTrue(test1 < test2, message)
+    def testIfLess(self, expected, testValue, message):
+        response = self.testIftrue(expected < testValue, message)
+        if response == 2:
+            print(f"Expected value less than {expected}")
+            print(f"Value equal to {testValue}")
     
-    def testIfLessEqual(self, test1, test2, message):
-        self.testIfTrue(test1 <= test2, message)
+    def testIfLessEqual(self, expected, testValue, message):
+        response = self.testIftrue(expected <= testValue, message)
+        if response == 2:
+            print(f"Expected value less or equal than {expected}")
+            print(f"Value equal to {testValue}")
         
     def newScenario(self, name):
         print(f"Starting scenario {name}")
@@ -69,11 +89,11 @@ class testEngine:
             string = "TEST PASSED"
         else:
             string = "TEST FAILED"
-        print(f"Test results: {string}\n")
-        print(f"\t {self.passCount} passed\n")
-        print(f"\t {self.failCount} failed\n")
-        print(f"\t {self.skipCount} skipped\n")
-        print(f"\t {self.testCount} total\n")
+        print(f"Test results: {string}")
+        print(f"\t {self.passCount} passed")
+        print(f"\t {self.failCount} failed")
+        print(f"\t {self.skipCount} skipped")
+        print(f"\t {self.testCount} total")
         
     def lofResults(self, log):
         if self.passed:
@@ -86,4 +106,5 @@ class testEngine:
         logger.addEntry(f"\t {self.skipCount} skipped\n")
         logger.addEntry(f"\t {self.testCount} total\n")
     
-    
+
+test = testEngine()

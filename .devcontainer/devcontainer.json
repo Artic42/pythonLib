@@ -7,13 +7,13 @@
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
+	"containerEnv": {"PYTHONPATH": "/workspaces/pythonLib/src"}
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
 	// "postCreateCommand": "pip3 install --user -r requirements.txt",
-	"postCreateCommand": "bash init.sh"
 
 	// Configure tool-specific properties.
 	// "customizations": {},

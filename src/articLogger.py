@@ -28,21 +28,22 @@ class Log:
         self.lines = 0
         self.logPath = logPath
         self.mask = mask
-        self.date = dateTime.createDate(dateTime.YYYYMMDD())
+        self.date = dateTime.createDate(dateTime.YYYYMMDD)
         self.createLogFile()
     
     def createLogFile(self):
         self.date.setToNow()
-        dateSring = self.date.getDateTime()
-        self.logFile = open(self.logPath + "/" + self.logName + "_" + dateSring + ".log", "w")
-        self.logFile.write(f"Log file created at {dateSring} with name {self.logName}\n")
+        dateSring = self.date.getDateTimePathFomat()
+        self.logFilePath = self.logPath + "/" + self.logName + "_" + dateSring + ".log"
+        self.logFile = open(self.logFilePath, "w")
+        self.logFile.write(f"Log file created at {self.date.getDateTime()} with name {self.logName}\n")
     
     def log(self, message, mask = INFO_MASK):
         maskName = self.getMaskName(mask)
         if mask & self.mask:
             self.writeLog(message, maskName)
     
-    def getMaskName(mask):
+    def getMaskName(self, mask):
         switcher = {
             INFO_MASK: "INFO",
             WARN_MASK: "WARN",
@@ -84,6 +85,9 @@ class Log:
         self.logFile.close()
         self.lines = 0
         self.createLogFile()
+        
+    def getLogFilePath(self):
+        return self.logFilePath        
     
     def close(self):
         self.logFile.close()

@@ -6,17 +6,16 @@ MMDDYYYY = 3
 
 class createDate:
     def __init__(self, mode):
-        self.setMode(mode)
+        self.mode = mode
     
     def setToNow(self):
-        date = datetime.now
-        self.year = int(date.strftime("%Y"))
-        self.month = int(date.strftime("%m"))
-        self.day = int(date.strftime("%d"))
-        self.hour = int(date.strftime("%H"))
-        self.minute = int(date.strftime("%M"))
-        self.second = int(date.strftime("%S"))
-        
+        date = datetime.now()
+        self.year = int(date.year)
+        self.month = int(date.month)
+        self.day = int(date.day)
+        self.hour = int(date.hour)
+        self.minute = int(date.minute)
+        self.second = int(date.second)
         self.calculateStringDate()
         self.calculateStringTime()
     
@@ -27,7 +26,6 @@ class createDate:
         self.hour = hour
         self.minute = minute
         self.second = second
-        
         self.calculateStringDate()
         self.calculateStringTime()
         
@@ -37,7 +35,6 @@ class createDate:
         time = string[1]
         self.dateString = date
         self.timeString = time
-        
         self.calculateDate()
         self.calculateTime()
     
@@ -78,9 +75,13 @@ class createDate:
     def setMode(self, mode):
         self.mode = mode
         self.calculateStringDate()
-    
-    
+        
     ## Output values
+    def getDateTimePathFomat(self):
+        string1 = f"{self.year}{self.month}{self.day}"
+        string2 = f"{self.hour}{self.minute}{self.second}"
+        return f"{string1}_{string2}"
+    
     def getDate(self):
         return self.dateString
     
