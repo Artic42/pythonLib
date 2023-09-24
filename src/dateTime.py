@@ -78,9 +78,16 @@ class createDate:
         
     ## Output values
     def getDateTimePathFomat(self):
-        string1 = f"{self.year}{self.month}{self.day}"
-        string2 = f"{self.hour}{self.minute}{self.second}"
-        return f"{string1}_{string2}"
+        if self.mode == YYYYMMDD:
+            dateString = str(self.year) + str(self.month).zfill(2) + str(self.day).zfill(2)
+        elif self.mode == DDMMYYYY:
+            dateString = str(self.day).zfill(2) + str(self.month).zfill(2) + str(self.year)
+        elif self.mode == MMDDYYYY:
+            dateString = str(self.month).zfill(2) + str(self.day).zfill(2) + str(self.year)
+        else:
+            raise ValueError("Invalid mode")
+        timeString = str(self.hour).zfill(2) + str(self.minute).zfill(2) + str(self.second).zfill(2)
+        return f"{dateString}_{timeString}"
     
     def getDate(self):
         return self.dateString

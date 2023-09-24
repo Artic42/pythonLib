@@ -1,6 +1,5 @@
 import articLogger as logger
 import articFileUtils as fileUtils
-import testEngine as testEngine
 import time
 from testEngine import test
 
