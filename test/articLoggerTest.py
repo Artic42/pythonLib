@@ -4,14 +4,10 @@ import testEngine as testEngine
 import time
 from testEngine import test
 
-
-
 def runTest():
     print("Starting test for logger")
     runScenario1()
     print("Finished test for logger")
-
-    
 
 def runScenario1():
     test.newScenario("Log create, close and masks")
@@ -19,7 +15,6 @@ def runScenario1():
     test12_15()
     test16()
     test.endScenario("Log create, close and masks")
-
 
 def test11():
     #Create a log send 1 line and check file size is equal to 3 lines.
@@ -60,8 +55,6 @@ def test16():
     test.testIfEqual(2, len(fileUtils.getFilesInDirectory("logs")), "Checking two log files are created")
     for path in fileUtils.getFilesInDirectory("logs"):
         fileUtils.deleteFile("logs/" + path)
-    
-    
     
 if __name__ == "__main__":
     runTest()
