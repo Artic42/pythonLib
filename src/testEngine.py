@@ -108,5 +108,4 @@ class testEngine:
         logger.addEntry(f"\t {self.skipCount} skipped\n")
         logger.addEntry(f"\t {self.testCount} total\n")
     
-
 test = testEngine()
