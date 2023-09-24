@@ -9,6 +9,7 @@ from testEngine import test
 def runTest():
     print("Starting test for logger")
     runScenario1()
+    print("Finished test for logger")
 
     
 
@@ -50,6 +51,7 @@ def test12_15():
     fileUtils.deleteFile(logFilePath)
     
 def test16():
+    #Check if when limit reached, new file is created
     log1 = logger.Log("logs", mask=logger.INFO_MASK, maxLines=2)
     log1.log ("Just some log message1")
     time.sleep(2)

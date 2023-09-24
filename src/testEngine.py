@@ -1,4 +1,5 @@
 import articLogger as logger
+from consoleUtils import printRed, printGreen, printYellow, printMagenta
 
 class testEngine:
     def __init__(self):
@@ -17,17 +18,17 @@ class testEngine:
             self.testCount += 1
             if test:
                 self.passCount += 1
-                print(f"\tTest {self.testCount} passed: {message}")
+                printGreen(f"\tTest {self.testCount} passed: {message}")
                 return 1
             else:
                 self.failCount += 1
-                print(f"\tTest {self.testCount} failed: {message}")
+                printRed(f"\tTest {self.testCount} failed: {message}")
                 self.scenarioPassed = False
                 self.scenarioFailed= True
                 return 2
         else:
             self.skipCount += 1
-            print(f"\tTest {self.testCount} skipped: {message}")
+            printYellow(f"\tTest {self.testCount} skipped: {message}")
             return 3
     
     def testIfFalse(self, test, message):
@@ -36,38 +37,38 @@ class testEngine:
     def testIfEqual(self, expected, testValue, message):
         response = self.testIfTrue(expected == testValue, message)
         if response == 2:
-            print(f"\t\tExpected value equal to {expected}")
-            print(f"\t\tValue equal to {testValue}")
+            printMagenta(f"\t\tExpected value equal to {expected}")
+            printMagenta(f"\t\tValue equal to {testValue}")
     
     def testIfNotEqual(self, expected, testValue, message):
         response = self.testIftrue(expected != testValue, message)
         if response == 2:
-            print(f"\t\tExpected value differen to {expected}")
-            print(f"\t\tValue equal to {testValue}")
+            printMagenta(f"\t\tExpected value differen to {expected}")
+            printMagenta(f"\t\tValue equal to {testValue}")
     
     def testIfGreater(self, expected, testValue, message):
         response = self.testIftrue(expected > testValue, message)
         if response == 2:
-            print(f"\t\tExpected value greater than {expected}")
-            print(f"\t\tValue equal to {testValue}")
+            printMagenta(f"\t\tExpected value greater than {expected}")
+            printMagenta(f"\t\tValue equal to {testValue}")
     
     def testIfGreaterEqual(self, expected, testValue, message):
         response = self.testIftrue(expected >= testValue, message)
         if response == 2:
-            print(f"\t\tExpected value greater or equal than {expected}")
-            print(f"\t\tValue equal to {testValue}")
+            printMagenta(f"\t\tExpected value greater or equal than {expected}")
+            printMagenta(f"\t\tValue equal to {testValue}")
     
     def testIfLess(self, expected, testValue, message):
         response = self.testIftrue(expected < testValue, message)
         if response == 2:
-            print(f"\t\tExpected value less than {expected}")
-            print(f"\t\tValue equal to {testValue}")
+            printMagenta(f"\t\tExpected value less than {expected}")
+            printMagenta(f"\t\tValue equal to {testValue}")
     
     def testIfLessEqual(self, expected, testValue, message):
         response = self.testIftrue(expected <= testValue, message)
         if response == 2:
-            print(f"\t\tExpected value less or equal than {expected}")
-            print(f"\t\tValue equal to {testValue}")
+            printMagenta(f"\t\tExpected value less or equal than {expected}")
+            printMagenta(f"\t\tValue equal to {testValue}")
         
     def newScenario(self, name):
         self.scenarioCount += 1
@@ -88,10 +89,9 @@ class testEngine:
     # Output test results in different ways
     def printResults(self):
         if self.passed:
-            string = "TEST PASSED"
+            printGreen("TEST PASSED")
         else:
-            string = "TEST FAILED"
-        print(f"Test results: {string}")
+            printRed("TEST FAILED")
         print(f"\t {self.scenarioCount} scenarios")
         print(f"\t {self.testCount} tests")
         print(f"\t {self.passCount} passed")
@@ -100,10 +100,9 @@ class testEngine:
         
     def lofResults(self, log):
         if self.passed:
-            string = "TEST PASSED"
+            logger.addEntry("TEST PASSED", log.INFO_MASK)
         else:
-            string = "TEST FAILED"
-        logger.addEntry(f"Test results: {string}\n", log.ERROR_MASK)
+            logger.addEntry("TEST FAILED", log.ERROR_MASK)
         logger.addEntry(f"\t {self.passCount} passed\n")
         logger.addEntry(f"\t {self.failCount} failed\n")
         logger.addEntry(f"\t {self.skipCount} skipped\n")
