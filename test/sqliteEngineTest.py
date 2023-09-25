@@ -2,13 +2,14 @@ from testEngine import test
 from sqliteEngine import sqliteEngine
 import articFileUtils as fileUtils
 
-sqliteEngine1 = sqliteEngine("test.db")
+fileUtils.deleteFile("test.sqlite") if fileUtils.fileExists("test.sqlite") else None
+sqliteEngine1 = sqliteEngine("test.sqlite")
 
 def runTest():
     print("Starting test for sqlite engine")
     runScenario1()
     sqliteEngine1.commitClose()
-    fileUtils.deleteFile("test.db")
+    fileUtils.deleteFile("test.sqlite")
     print("Finished test for sqlite engine")
     
 def runScenario1():
@@ -37,16 +38,16 @@ def test13():
     test.testIfEqual([], result, "Checking entry deleted")
     
 def test14():
-    sqliteEngine1.addColumn("test", "newColumn TEXT")
-    sqliteEngine1.addEntry("test", "name, value, newColumn", "'testName', 'testValue', 'testNewColumn'")
-    result = sqliteEngine1.readEntry("name, value, newColumn", "test")
-    test.testIfEqual([('testName', 'testValue', 'testNewColumn')], result, "Checking entry added with new column")
-    
+    sqliteEngine1.addEntry("test", "name, value", "'testName', 'testValue'")
+    sqliteEngine1.addEntry("test", "name, value", "'testName2', 'testValue2'")
+    result = sqliteEngine1.readEntryFiltered("name, value", "test", "id = 2")
+    test.testIfEqual([('testName2', 'testValue2')], result, "Checking entry filtered")
+
 def test15():
-    sqliteEngine1.deleteColumn("test", "newColumn")
-    result = sqliteEngine1.readEntry("newColumn", "test")
-    test.testIfEqual([], result, "Checking column deleted")
-    
+    result = sqliteEngine1.entryExistsOnTable("test", "id = 2")
+    test.testIfEqual(True, result, "Checking entry exists")
+    result = sqliteEngine1.entryExistsOnTable("test", "id = 3")
+    test.testIfEqual(False, result, "Checking entry doesn't exist")
     
 if __name__ == "__main__":
     runTest()

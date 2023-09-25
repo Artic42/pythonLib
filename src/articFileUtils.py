@@ -6,7 +6,10 @@ def deleteFile(path):
 def createFile(path):
     file = open (path, "r")
     file.close()
-    
+
+def fileExists(path):
+    return os.path.isfile(path)
+
 def getFilesInDirectory(path):
     return os.listdir(path)
     

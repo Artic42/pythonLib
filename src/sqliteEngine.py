@@ -25,12 +25,6 @@ class sqliteEngine:
     
     def deleteEntry (self, table, condition):
         self.executeCommand (f"DELETE FROM {table} WHERE {condition};")
-        
-    def deleteColumn (self, table, column):
-        self.executeCommand (f"ALTER TABLE {table} DROP COLUMN {column};")
-    
-    def updateColumn (self, table, column, newColumn):
-        self.executeCommand (f"ALTER TABLE {table} RENAME COLUMN {column} TO {newColumn};")
     
     def readEntry (self, columns, table):
         self.executeCommand (f"SELECT {columns} FROM {table};")
@@ -55,6 +49,9 @@ class sqliteEngine:
     def deleteEntryFromTable (self, table, condition):
         self.executeCommand (f"DELETE FROM {table} WHERE {condition};")
 
-    def commitClose(self):
+    def commit(self):
         self.con.commit()
+
+    def commitClose(self):
+        self.commit()
         self.con.close()

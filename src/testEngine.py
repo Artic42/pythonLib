@@ -1,5 +1,5 @@
 import articLogger as logger
-from consoleUtils import printRed, printGreen, printYellow, printMagenta
+from consoleUtils import printRed, printGreen, printYellow, printMagenta, printGreenBold, printRedBold
 
 class testEngine:
     def __init__(self):
@@ -89,9 +89,9 @@ class testEngine:
     # Output test results in different ways
     def printResults(self):
         if self.passed:
-            printGreen("TEST PASSED")
+            printGreenBold("TEST PASSED")
         else:
-            printRed("TEST FAILED")
+            printRedBold("TEST FAILED")
         print(f"\t {self.scenarioCount} scenarios")
         print(f"\t {self.testCount} tests")
         print(f"\t {self.passCount} passed")

@@ -1,0 +1,12 @@
+{
+    "configurations": [
+        {
+            "name": "sqliteEngineTest",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/sqliteEngineTest.py",
+            "console": "integratedTerminal",
+            "justMyCode": true
+        }
+    ]
+}
