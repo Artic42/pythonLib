@@ -14,16 +14,17 @@ COMMS_MASK= 0b00011000
 DEBUG_MASK = 0b01000000
 DEFAULT_MASK = INFO_MASK | COMMS_MASK | ERROR_MASK | HERMES_MASK
 
-global mainLogger
-
-def setMainLogger(logObject):
-    mainLogger = logObject
-
-def addEntry(message, mask = INFO_MASK):
-    mainLogger.writeLog(message, mask)
-
-class Log:
-    def __init__(self, logName, maxLines = 1000, logPath = "logs", mask = DEFAULT_MASK):
+class Logger:
+    def __init__(self):
+        self.init = False
+        self.logName = ""
+        self.maxLines = 0
+        self.lines = 0
+        self.logPath = ""
+        self.mask = 0b0
+    
+    def initialize(self, logName, maxLines = 1000, logPath = "logs", mask = DEFAULT_MASK):
+        self.init = True
         self.logName = logName
         self.maxLines = maxLines
         self.lines = 0
@@ -44,10 +45,11 @@ class Log:
             self.logFile.write(f"Log file created at {self.date.getDateTime()} with name {self.logName}\n")
             self.lines = 0
     
-    def log(self, message, mask = INFO_MASK):
+    def addEntry(self, message, mask = INFO_MASK):
         maskName = self.getMaskName(mask)
         if mask & self.mask:
-            self.writeLog(message, maskName)
+            if self.init:
+                self.writeLog(message, maskName)
     
     def getMaskName(self, mask):
         switcher = {
@@ -96,3 +98,5 @@ class Log:
     
     def close(self):
         self.logFile.close()
+        
+log = Logger()
