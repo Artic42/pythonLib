@@ -44,6 +44,9 @@ class FileIO:
     
     def addLine(self, line):
         self.lines.append(line)
+
+    def modifyLine(self, lineNumber, line):
+        self.lines[lineNumber] = line
         
     def lineCount(self):
         return len(self.lines)
