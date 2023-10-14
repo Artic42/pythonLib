@@ -16,6 +16,9 @@ class sqliteEngine:
     
     def addColumn (self, table, column):
         self.executeCommand (f"ALTER TABLE {table} ADD COLUMN {column};")
+        
+    def deleteColumn (self, table, column):
+        self.executeCommand (f"ALTE TABLE {table} DROP COLUMN {column}")
     
     def addEntry (self, table, columns, values):
         self.executeCommand (f"INSERT INTO {table} ({columns}) VALUES ({values});")
@@ -31,6 +34,12 @@ class sqliteEngine:
         result = self.cursor.fetchall()
         log.addEntry(f"Read entry: {result}", Logger.DEBUG_MASK)
         return result
+    
+    def readNumberOfEntries (self, table):
+        self.executeCommand (f"SELECT COUNT(*) FROM {table};")
+        result = self.cursor.fetchall()
+        log.addEntry(f"Read number of entries: {result}", Logger.DEBUG_MASK)
+        return result[0][0]
 
     def readEntryFiltered (self, columns, table, filter):
         self.executeCommand(f"SELECT {columns} FROM {table} WHERE {filter};")
