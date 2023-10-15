@@ -29,7 +29,7 @@ class sqliteEngine:
     def deleteEntry (self, table, condition):
         self.executeCommand (f"DELETE FROM {table} WHERE {condition};")
     
-    def readEntry (self, columns, table):
+    def readEntry (self, table, columns):
         self.executeCommand (f"SELECT {columns} FROM {table};")
         result = self.cursor.fetchall()
         log.addEntry(f"Read entry: {result}", Logger.DEBUG_MASK)
@@ -41,7 +41,7 @@ class sqliteEngine:
         log.addEntry(f"Read number of entries: {result}", Logger.DEBUG_MASK)
         return result[0][0]
 
-    def readEntryFiltered (self, columns, table, filter):
+    def readEntryFiltered (self, table, columns, filter):
         self.executeCommand(f"SELECT {columns} FROM {table} WHERE {filter};")
         result = self.cursor.fetchall()
         log.addEntry(f"Read entry: {result}", Logger.DEBUG_MASK)

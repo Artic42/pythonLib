@@ -31,23 +31,23 @@ def runScenario2():
 def test11():
     sqliteEngine1.createTable("test", "id INTEGER PRIMARY KEY, name TEXT, value TEXT")
     sqliteEngine1.addEntry("test", "name, value", "'testName', 'testValue'")
-    result = sqliteEngine1.readEntry("name, value", "test")
+    result = sqliteEngine1.readEntry("test", "name, value")
     test.testIfEqual([('testName', 'testValue')], result, "Checking entry added")
     
 def test12():
     sqliteEngine1.updateEntry("test", "name", "'testName2'", "id = 1")
-    result = sqliteEngine1.readEntry("name, value", "test")
+    result = sqliteEngine1.readEntry("test", "name, value")
     test.testIfEqual([('testName2', 'testValue')], result, "Checking entry updated")
     
 def test13():
     sqliteEngine1.deleteEntry("test", "id = 1")
-    result = sqliteEngine1.readEntry("name, value", "test")
+    result = sqliteEngine1.readEntry("test", "name, value")
     test.testIfEqual([], result, "Checking entry deleted")
     
 def test14():
     sqliteEngine1.addEntry("test", "name, value", "'testName', 'testValue'")
     sqliteEngine1.addEntry("test", "name, value", "'testName2', 'testValue2'")
-    result = sqliteEngine1.readEntryFiltered("name, value", "test", "id = 2")
+    result = sqliteEngine1.readEntryFiltered("test", "name, value", "id = 2")
     test.testIfEqual([('testName2', 'testValue2')], result, "Checking entry filtered")
 
 def test15():
@@ -62,7 +62,7 @@ def test21():
     sqliteEngine1.addColumn("test", "testColumn TEXT")
     sqliteEngine1.addEntry("test", "name, value, testColumn", "'testName', 'testValue', 'testValue'")
     sqliteEngine1.addEntry("test", "name, value, testColumn", "'testName2', 'testValue2', 'testValue2'")
-    result = sqliteEngine1.readEntry("testColumn", "test")
+    result = sqliteEngine1.readEntry("test", "testColumn")
     test.testIfEqual([('testValue',), ('testValue2',)], result, "Checking column added")
     
 def test22():
