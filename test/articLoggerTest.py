@@ -52,9 +52,10 @@ def test16():
     log.addEntry ("Just some log message2")
     log.addEntry ("Just some log message3")
     test.testIfEqual(2, len(fileUtils.getFilesInDirectory("logs")), "Checking two log files are created")
+    log.close()
     for path in fileUtils.getFilesInDirectory("logs"):
         fileUtils.deleteFile("logs/" + path)
-    log.close()
+
     fileUtils.deleteDirectory("logs")
     
 if __name__ == "__main__":
