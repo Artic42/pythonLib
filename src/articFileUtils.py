@@ -24,6 +24,8 @@ class FileIO:
         self.path = path
         if readIt:
             self.readFile()
+        else:
+            lines = []
     
     def readFile(self):
         filePointer = open (self.path, "r")
