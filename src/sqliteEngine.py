@@ -18,7 +18,7 @@ class sqliteEngine:
         self.executeCommand (f"ALTER TABLE {table} ADD COLUMN {column};")
         
     def deleteColumn (self, table, column):
-        self.executeCommand (f"ALTE TABLE {table} DROP COLUMN {column}")
+        self.executeCommand (f"ALTER TABLE {table} DROP COLUMN {column}")
     
     def addEntry (self, table, columns, values):
         self.executeCommand (f"INSERT INTO {table} ({columns}) VALUES ({values});")
