@@ -1,7 +1,7 @@
 
 
-from systemUtils import executeCommand
-import systemUtils
+from articlib.systemUtils import executeCommand
+import articlib.systemUtils as systemUtils
 
 result = executeCommand ("ls")
 

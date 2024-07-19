@@ -1,5 +1,5 @@
-from testEngine import test
-import dateTime
+from articlib.testEngine import test
+import articlib.dateTime as dateTime
 
 def runTest():
     print("Starting test for dateTime")

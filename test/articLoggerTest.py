@@ -1,8 +1,8 @@
-import articLogger as logger
-import articFileUtils as fileUtils
+import articlib.articLogger as logger
+import articlib.articFileUtils as fileUtils
 import time
-from testEngine import test
-from articLogger import log
+from articlib.testEngine import test
+from articlib.articLogger import log
 
 def runTest():
     print("Starting test for logger")

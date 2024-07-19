@@ -1,1 +1,6 @@
-{"git.enableCommitSigning": false}
+{
+    "git.enableCommitSigning": false,
+    "cSpell.words": [
+        "articlib"
+    ]
+}

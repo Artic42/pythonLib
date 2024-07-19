@@ -1,6 +1,6 @@
-from testEngine import test
-from sqliteEngine import sqliteEngine
-import articFileUtils as fileUtils
+from articlib.testEngine import test
+from articlib.sqliteEngine import sqliteEngine
+import articlib.articFileUtils as fileUtils
 
 fileUtils.deleteFile("test.sqlite") if fileUtils.fileExists("test.sqlite") else None
 sqliteEngine1 = sqliteEngine("test.sqlite")

@@ -1,7 +1,7 @@
 import dateTimeTest
 import articLoggerTest
 import sqliteEngineTest
-from testEngine import test
+from articlib.testEngine import test
 
 
 def main():

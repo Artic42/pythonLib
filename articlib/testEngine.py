@@ -1,5 +1,5 @@
-import articLogger as logger
-from consoleUtils import printRed, printGreen, printYellow, printMagenta, printGreenBold, printRedBold
+import articlib.articLogger as logger
+from articlib.consoleUtils import printRed, printGreen, printYellow, printMagenta, printGreenBold, printRedBold
 
 class testEngine:
     def __init__(self):

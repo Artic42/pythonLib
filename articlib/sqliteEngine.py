@@ -1,6 +1,6 @@
 import sqlite3
-import articLogger as Logger
-from articLogger import log
+import articlib.articLogger as Logger
+from articlib.articLogger import log
 
 class sqliteEngine:
     def __init__(self, dbPath):

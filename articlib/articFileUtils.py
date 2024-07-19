@@ -1,4 +1,5 @@
 import os
+import shutil
 
 def deleteFile(path):
     os.remove(path)
@@ -6,6 +7,9 @@ def deleteFile(path):
 def createFile(path):
     file = open (path, "r")
     file.close()
+    
+def copyFile(source, destination):
+    shutil.copy(source, destination)
 
 def fileExists(path):
     return os.path.isfile(path)

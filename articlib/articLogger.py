@@ -1,4 +1,4 @@
-import dateTime
+import articlib.dateTime as dateTime
 import os
 
 if __name__ == "__main__":
