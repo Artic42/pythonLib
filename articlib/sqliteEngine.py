@@ -24,7 +24,7 @@ class sqliteEngine:
         self.executeCommand (f"INSERT INTO {table} ({columns}) VALUES ({values});")
     
     def updateEntry (self, table, columns, values, condition):
-        self.executeCommand (f"UPDATE {table} SET {columns} = {values} WHERE {condition};")
+        self.executeCommand (f"UPDATE {table} SET {columns} = \"{values}\" WHERE {condition};")
     
     def deleteEntry (self, table, condition):
         self.executeCommand (f"DELETE FROM {table} WHERE {condition};")
