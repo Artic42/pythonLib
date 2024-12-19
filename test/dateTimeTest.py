@@ -1,6 +1,7 @@
 from articlib.testEngine import test
 import articlib.dateTime as dateTime
 
+
 def runTest():
     print("Starting test for dateTime")
     runScenario1()
@@ -9,7 +10,8 @@ def runTest():
     runScenario4()
     runScenario5()
     print("Finished test for dateTime")
-    
+
+
 def runScenario1():
     test.newScenario("Check setTo function")
     date = dateTime.createDate(dateTime.YYYYMMDD)
@@ -21,7 +23,8 @@ def runScenario1():
     test.testIfEqual(10, date.minute, "Checking minute is 10")
     test.testIfEqual(10, date.second, "Checking second is 10")
     test.endScenario("Check setTo function")
-    
+
+
 def runScenario2():
     test.newScenario("Check setToString function in mode YYYYMMDD")
     date = dateTime.createDate(dateTime.YYYYMMDD)
@@ -33,6 +36,7 @@ def runScenario2():
     test.testIfEqual(10, date.minute, "Checking minute is 10")
     test.testIfEqual(10, date.second, "Checking second is 10")
     test.endScenario("Check setToString function in mode YYYYMMDD")
+
 
 def runScenatio3():
     test.newScenario("Check setToString function in mode DDMMYYYY")
@@ -46,6 +50,7 @@ def runScenatio3():
     test.testIfEqual(10, date.second, "Checking second is 10")
     test.endScenario("Check setToString function in mode DDMMYYYY")
 
+
 def runScenario4():
     test.newScenario("Check setToString function in mode MMDDYYYY")
     date = dateTime.createDate(dateTime.MMDDYYYY)
@@ -58,6 +63,7 @@ def runScenario4():
     test.testIfEqual(10, date.second, "Checking second is 10")
     test.endScenario("Check setToString function in mode MMDDYYYY")
 
+
 def runScenario5():
     test.newScenario("Date time string output")
     test51()
@@ -67,42 +73,73 @@ def runScenario5():
     test55()
     test56()
     test.endScenario("Date time string output")
-    
+
+
 def test51():
     date = dateTime.createDate(dateTime.YYYYMMDD)
     dateTimeString = "2020/10/01 10:10:10"
     date.setToString(dateTimeString)
-    test.testIfEqual(dateTimeString, date.getDateTime(), "Checking outputed in string format mode YYYYMMDD")
-    
+    test.testIfEqual(
+        dateTimeString,
+        date.getDateTime(),
+        "Checking outputed in string format mode YYYYMMDD",
+    )
+
+
 def test52():
     date = dateTime.createDate(dateTime.DDMMYYYY)
     dateTimeString = "01/10/2020 10:10:10"
     date.setToString(dateTimeString)
-    test.testIfEqual(dateTimeString, date.getDateTime(), "Checking outputed in string format mode DDMMYYYY")
+    test.testIfEqual(
+        dateTimeString,
+        date.getDateTime(),
+        "Checking outputed in string format mode DDMMYYYY",
+    )
+
 
 def test53():
     date = dateTime.createDate(dateTime.MMDDYYYY)
     dateTimeString = "10/01/2020 10:10:10"
     date.setToString(dateTimeString)
-    test.testIfEqual(dateTimeString, date.getDateTime(), "Checking outputed in string format mode MMDDYYYY")
+    test.testIfEqual(
+        dateTimeString,
+        date.getDateTime(),
+        "Checking outputed in string format mode MMDDYYYY",
+    )
+
 
 def test54():
     date = dateTime.createDate(dateTime.YYYYMMDD)
     dateTimeString = "2020/10/01 10:10:10"
     date.setToString(dateTimeString)
-    test.testIfEqual("20201001_101010", date.getDateTimePathFomat(), "Checkingoutputed in path format on mode YYYYMMDDq")
-    
+    test.testIfEqual(
+        "20201001_101010",
+        date.getDateTimePathFomat(),
+        "Checkingoutputed in path format on mode YYYYMMDDq",
+    )
+
+
 def test55():
     date = dateTime.createDate(dateTime.DDMMYYYY)
     dateTimeString = "01/10/2020 10:10:10"
     date.setToString(dateTimeString)
-    test.testIfEqual("01102020_101010", date.getDateTimePathFomat(), "Checkingoutputed in path format on mode DDMMYYYY")
+    test.testIfEqual(
+        "01102020_101010",
+        date.getDateTimePathFomat(),
+        "Checkingoutputed in path format on mode DDMMYYYY",
+    )
+
 
 def test56():
     date = dateTime.createDate(dateTime.MMDDYYYY)
     dateTimeString = "10/01/2020 10:10:10"
     date.setToString(dateTimeString)
-    test.testIfEqual("10012020_101010", date.getDateTimePathFomat(), "Checkingoutputed in path format on mode MMDDYYYY")
+    test.testIfEqual(
+        "10012020_101010",
+        date.getDateTimePathFomat(),
+        "Checkingoutputed in path format on mode MMDDYYYY",
+    )
+
 
 if __name__ == "__main__":
     runTest()

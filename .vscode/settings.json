@@ -1,6 +1,10 @@
 {
     "git.enableCommitSigning": false,
+    "editor.renderWhitespace": "boundary",
     "cSpell.words": [
         "articlib"
+    ],
+    "python.analysis.extraPaths": [
+        "./test"
     ]
 }
