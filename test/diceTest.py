@@ -3,7 +3,7 @@ import articlib.dice as Dice
 
 
 def runTest():
-    print("Dice test starte")
+    print("Dice test started")
     runScenario1()
     print("Dice test finished")
 
@@ -17,7 +17,7 @@ def runScenario1():
     dicePool = Dice.dicePool([dice1, dice1, dice1])
     test.testIfEqual(dicePool.roll(), [1, 1, 1], "Roll 3 dice")
     test.testIfEqual(dicePool.rollSum(), 3, "Add the 3")
-    test.testIfEqual(dicePool.rollSuccesses(2), 0, "Check no succes")
+    test.testIfEqual(dicePool.rollSuccesses(2), 0, "Check no successes")
     test.testIfEqual(dicePool.rollSuccesses(1), 3, "Check successes")
     print("Scenario 1 finished")
 

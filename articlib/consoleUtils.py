@@ -1,5 +1,4 @@
-import colorama
-from colorama import Fore, Back, Style
+from colorama import Fore, Style
 
 
 def printRed(text):

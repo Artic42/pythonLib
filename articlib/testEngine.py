@@ -63,8 +63,10 @@ class testEngine:
     def testIfGreaterEqual(self, expected, testValue, message):
         response = self.testIftrue(expected >= testValue, message)
         if response == 2:
-            printMagenta(f"""\t\tExpected value greater
-                         or equal than {expected}""")
+            printMagenta(
+                f"""\t\tExpected value greater
+                         or equal than {expected}"""
+            )
             printMagenta(f"\t\tValue equal to {testValue}")
 
     def testIfLess(self, expected, testValue, message):
@@ -85,11 +87,15 @@ class testEngine:
 
     def endScenario(self, name):
         if self.escenarioPassed:
-            print(f"""Scenario {self.scenarioCount}:{name} ended
-                  with result: PASSED""")
+            print(
+                f"""Scenario {self.scenarioCount}:{name} ended
+                  with result: PASSED"""
+            )
         else:
-            print(f"""Scenario {self.scenarioCount}:{name} ended
-                  with result: FAILED""")
+            print(
+                f"""Scenario {self.scenarioCount}:{name} ended
+                  with result: FAILED"""
+            )
         if self.escenarioFailed:
             self.passed = False
             self.failed = True

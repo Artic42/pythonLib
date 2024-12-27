@@ -1,7 +1,14 @@
 {
     "git.enableCommitSigning": false,
     "editor.renderWhitespace": "boundary",
+    "cSpell.ignorePaths": [
+        "pyproject.toml",
+        "poetry.lock",
+        ".vscode/settings.json",
+        ".gitignore"
+      ],
     "cSpell.words": [
+        "artic",
         "articlib"
     ],
     "python.analysis.extraPaths": [
