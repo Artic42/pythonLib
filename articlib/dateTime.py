@@ -77,9 +77,9 @@ class createDate:
             raise ValueError("Invalid mode")
 
     def calculateStringTime(self) -> None:
-        self.timeString = (
-            str(self.hour).zfill(2) + ":" + str(self.minute).zfill(2) + ":" + str(self.second).zfill(2)
-        )
+        self.timeString = str(self.hour).zfill(2) + ":"
+        self.timeString = self.timeString + str(self.minute).zfill(2) + ":"
+        self.timeString = self.timeString + str(self.second).zfill(2)
 
     def setMode(self, mode: int) -> None:
         self.mode = mode
