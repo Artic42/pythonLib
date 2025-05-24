@@ -1,21 +1,35 @@
 import articlib.dateTime as dateTime
 import os
+from articlib.consoleUtils import (
+    printGreen,
+    printYellow,
+    printRed,
+)
 
 if __name__ == "__main__":
     pass
 
-INFO_MASK = 0b00000001
-WARN_MASK = 0b00000010
-ERROR_MASK = 0b00000100
-COMMS_SEND_MASK = 0b00001000
-COMMS_RECV_MASK = 0b00010000
-HERMES_MASK = 0b00100000
-COMMS_MASK = 0b00011000
-DEBUG_MASK = 0b01000000
-DEFAULT_MASK = INFO_MASK | COMMS_MASK | ERROR_MASK | HERMES_MASK
-
 
 class Logger:
+    __instance = None
+
+    INFO_MASK = 0b00000001
+    WARN_MASK = 0b00000010
+    ERROR_MASK = 0b00000100
+    COMMS_SEND_MASK = 0b00001000
+    COMMS_RECV_MASK = 0b00010000
+    HERMES_MASK = 0b00100000
+    COMMS_MASK = 0b00011000
+    DEBUG_MASK = 0b01000000
+    DEFAULT_MASK = INFO_MASK | COMMS_MASK | ERROR_MASK | HERMES_MASK
+
+    @staticmethod
+    def getInstance():
+        """Static access method to get the singleton instance"""
+        if Logger.__instance is None:
+            Logger.__instance = Logger()
+        return Logger.__instance
+
     def __init__(self):
         self.init = False
         self.logName = ""
@@ -24,7 +38,13 @@ class Logger:
         self.logPath = ""
         self.mask = 0b0
 
-    def initialize(self, logName, maxLines=1000, logPath="logs", mask=DEFAULT_MASK):
+    def initialize(self,
+                   logName: str,
+                   maxLines: int = 1000,
+                   logPath: str = "logs",
+                   mask: int = DEFAULT_MASK,
+                   consoleOutput: bool = True):
+        self.consoleOutput = consoleOutput
         self.init = True
         self.logName = logName
         self.maxLines = maxLines
@@ -36,9 +56,9 @@ class Logger:
 
     def createLogFile(self):
         self.date.setToNow()
-        dateSring = self.date.getDateTimePathFomat()
+        dateString = self.date.getDateTimePathFormat()
         os.makedirs(self.logPath, exist_ok=True)
-        self.logFilePath = self.logPath + "/" + self.logName + "_" + dateSring + ".log"
+        self.logFilePath = self.logPath + "/" + self.logName + "_" + dateString + ".log"
         if os.path.isfile(self.logFilePath):
             self.logFile = open(self.logFilePath, "a")
         else:
@@ -48,33 +68,50 @@ class Logger:
             )
             self.lines = 0
 
-    def addEntry(self, message, mask=INFO_MASK):
+    def addEntry(self, message: str, mask: int = INFO_MASK, consoleOutput: bool = None):
+        try:
+            if consoleOutput is None:
+                consoleOutput = self.consoleOutput
+        except AttributeError:
+            consoleOutput = False
+        if not self.init:
+            return
         maskName = self.getMaskName(mask)
         if mask & self.mask:
-            if self.init:
-                self.writeLog(message, maskName)
+            self.writeLog(message, maskName, consoleOutput)
 
-    def getMaskName(self, mask):
+    def getMaskName(self, mask: int) -> str:
+        """Returns the name of the mask based on its value."""
         switcher = {
-            INFO_MASK: "INFO",
-            WARN_MASK: "WARN",
-            ERROR_MASK: "ERROR",
-            COMMS_SEND_MASK: "COMMS_SEND",
-            COMMS_RECV_MASK: "COMMS_RECV",
-            HERMES_MASK: "HERMES",
-            DEBUG_MASK: "DEBUG",
-            DEFAULT_MASK: "DEFAULT",
+            Logger.INFO_MASK: "INFO",
+            Logger.WARN_MASK: "WARN",
+            Logger.ERROR_MASK: "ERROR",
+            Logger.COMMS_SEND_MASK: "COMMS_SEND",
+            Logger.COMMS_RECV_MASK: "COMMS_RECV",
+            Logger.HERMES_MASK: "HERMES",
+            Logger.DEBUG_MASK: "DEBUG",
+            Logger.DEFAULT_MASK: "DEFAULT",
         }
         return switcher.get(mask, "UNKNOWN")
 
-    def writeLog(self, message, maskName):
+    def writeLog(self, message, maskName, consoleOutput):
         self.date.setToNow()
-        dateSring = self.date.getDateTime()
+        dateString = self.date.getDateTime()
         self.lines += 1
-        self.logFile.write(f"{dateSring} - {maskName} - {message}\n")
+        self.logFile.write(f"{dateString} - {maskName} - {message}\n")
+        if consoleOutput:
+            self.outputToConsole(f"{dateString} - {maskName} - {message}", maskName)
         if self.lines >= self.maxLines:
             self.logFile.close()
             self.createLogFile()
+
+    def outputToConsole(self, message, maskName):
+        if maskName == "WARN":
+            printYellow(message)
+        elif maskName == "ERROR":
+            printRed(message)
+        else:
+            printGreen(message)
 
     def setMask(self, mask):
         self.mask = mask
@@ -101,6 +138,3 @@ class Logger:
 
     def close(self):
         self.logFile.close()
-
-
-log = Logger()

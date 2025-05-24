@@ -1,16 +1,27 @@
-import articlib.articLogger as logger
 from articlib.consoleUtils import (
-    printRed,
     printGreen,
     printYellow,
     printMagenta,
     printGreenBold,
     printRedBold,
 )
+from articlib.articLogger import Logger
+
+log = Logger.getInstance()
 
 
 class testEngine:
-    def __init__(self):
+    __instance = None
+    """Singleton test engine class for managing tests and scenarios"""
+
+    @staticmethod
+    def getInstance():
+        """Static access method to get the singleton instance"""
+        if testEngine.__instance is None:
+            testEngine.__instance = testEngine()
+        return testEngine.__instance
+
+    def __init__(self, outputConsole=True, outputLog=True):
         self.passed = True
         self.failed = False
         self.escenarioPassed = True
@@ -20,17 +31,19 @@ class testEngine:
         self.passCount = 0
         self.failCount = 0
         self.skipCount = 0
+        self.outputConsole = outputConsole
+        self.outputLog = outputLog
 
     def testIfTrue(self, test, message):
         if self.escenarioPassed:
             self.testCount += 1
             if test:
                 self.passCount += 1
-                printGreen(f"\tTest {self.testCount} passed: {message}")
+                self.outputGreen(f"\tTest {self.testCount} passed: {message}")
                 return 1
             else:
                 self.failCount += 1
-                printRed(f"\tTest {self.testCount} failed: {message}")
+                self.outputMagenta(f"\tTest {self.testCount} failed: {message}")
                 self.scenarioPassed = False
                 self.scenarioFailed = True
                 return 2
@@ -45,54 +58,54 @@ class testEngine:
     def testIfEqual(self, expected, testValue, message):
         response = self.testIfTrue(expected == testValue, message)
         if response == 2:
-            printMagenta(f"\t\tExpected value equal to {expected}")
-            printMagenta(f"\t\tValue equal to {testValue}")
+            self.outputMagenta(f"\t\tExpected value equal to {expected}")
+            self.outputMagenta(f"\t\tValue equal to {testValue}")
 
     def testIfNotEqual(self, expected, testValue, message):
-        response = self.testIftrue(expected != testValue, message)
+        response = self.testIfTrue(expected != testValue, message)
         if response == 2:
-            printMagenta(f"\t\tExpected value differen to {expected}")
-            printMagenta(f"\t\tValue equal to {testValue}")
+            self.outputMagenta(f"\t\tExpected value different to {expected}")
+            self.outputMagenta(f"\t\tValue equal to {testValue}")
 
     def testIfGreater(self, expected, testValue, message):
-        response = self.testIftrue(expected > testValue, message)
+        response = self.testIfTrue(expected > testValue, message)
         if response == 2:
-            printMagenta(f"\t\tExpected value greater than {expected}")
-            printMagenta(f"\t\tValue equal to {testValue}")
+            self.outputMagenta(f"\t\tExpected value greater than {expected}")
+            self.outputMagenta(f"\t\tValue equal to {testValue}")
 
     def testIfGreaterEqual(self, expected, testValue, message):
-        response = self.testIftrue(expected >= testValue, message)
+        response = self.testIfTrue(expected >= testValue, message)
         if response == 2:
-            printMagenta(
+            self.outputMagenta(
                 f"""\t\tExpected value greater
                          or equal than {expected}"""
             )
-            printMagenta(f"\t\tValue equal to {testValue}")
+            self.outputMagenta(f"\t\tValue equal to {testValue}")
 
     def testIfLess(self, expected, testValue, message):
-        response = self.testIftrue(expected < testValue, message)
+        response = self.testIfTrue(expected < testValue, message)
         if response == 2:
-            printMagenta(f"\t\tExpected value less than {expected}")
-            printMagenta(f"\t\tValue equal to {testValue}")
+            self.outputMagenta(f"\t\tExpected value less than {expected}")
+            self.outputMagenta(f"\t\tValue equal to {testValue}")
 
     def testIfLessEqual(self, expected, testValue, message):
-        response = self.testIftrue(expected <= testValue, message)
+        response = self.testIfTrue(expected <= testValue, message)
         if response == 2:
-            printMagenta(f"\t\tExpected value less or equal than {expected}")
-            printMagenta(f"\t\tValue equal to {testValue}")
+            self.outputMagenta(f"\t\tExpected value less or equal than {expected}")
+            self.outputMagenta(f"\t\tValue equal to {testValue}")
 
     def newScenario(self, name):
         self.scenarioCount += 1
-        print(f"Starting scenario {self.scenarioCount}: {name}")
+        self.outputDefault(f"Starting scenario {self.scenarioCount}: {name}")
 
     def endScenario(self, name):
         if self.escenarioPassed:
-            print(
+            self.outputDefault(
                 f"""Scenario {self.scenarioCount}:{name} ended
                   with result: PASSED"""
             )
         else:
-            print(
+            self.outputDefault(
                 f"""Scenario {self.scenarioCount}:{name} ended
                   with result: FAILED"""
             )
@@ -103,6 +116,30 @@ class testEngine:
         self.escenarioFailed = False
 
     # Output test results in different ways
+    def outputMagenta(self, message):
+        if self.outputConsole:
+            printMagenta(message)
+        if self.outputLog:
+            log.addEntry(message, Logger.ERROR_MASK, consoleOutput=False)
+
+    def outputGreen(self, message):
+        if self.outputConsole:
+            printGreen(message)
+        if self.outputLog:
+            log.addEntry(message, Logger.INFO_MASK, consoleOutput=False)
+
+    def outputYellow(self, message):
+        if self.outputConsole:
+            printYellow(message)
+        if self.outputLog:
+            log.addEntry(message, Logger.WARN_MASK, consoleOutput=False)
+
+    def outputDefault(self, message):
+        if self.outputConsole:
+            print(message)
+        if self.outputLog:
+            log.addEntry(message, Logger.INFO_MASK, consoleOutput=False)
+
     def printResults(self):
         if self.passed:
             printGreenBold("TEST PASSED")
@@ -114,15 +151,12 @@ class testEngine:
         print(f"\t {self.failCount} failed")
         print(f"\t {self.skipCount} skipped")
 
-    def lofResults(self, log):
+    def logResults(self):
         if self.passed:
-            logger.addEntry("TEST PASSED", log.INFO_MASK)
+            log.addEntry("TEST PASSED", Logger.INFO_MASK, consoleOutput=False)
         else:
-            logger.addEntry("TEST FAILED", log.ERROR_MASK)
-        logger.addEntry(f"\t {self.passCount} passed\n")
-        logger.addEntry(f"\t {self.failCount} failed\n")
-        logger.addEntry(f"\t {self.skipCount} skipped\n")
-        logger.addEntry(f"\t {self.testCount} total\n")
-
-
-test = testEngine()
+            log.addEntry("TEST FAILED", Logger.ERROR_MASK, consoleOutput=False)
+        log.addEntry(f"\t {self.passCount} passed\n", Logger.INFO_MASK, consoleOutput=False)
+        log.addEntry(f"\t {self.failCount} failed\n", Logger.INFO_MASK, consoleOutput=False)
+        log.addEntry(f"\t {self.skipCount} skipped\n", Logger.INFO_MASK, consoleOutput=False)
+        log.addEntry(f"\t {self.testCount} total\n", Logger.INFO_MASK, consoleOutput=False)

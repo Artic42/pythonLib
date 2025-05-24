@@ -1,5 +1,8 @@
-from articlib.testEngine import test
 import articlib.articFileUtils as AFU
+from articlib.testEngine import testEngine
+from articlib.articLogger import Logger
+
+test = testEngine.getInstance()
 
 
 def runTest():
@@ -28,5 +31,8 @@ def runScenario1():
 
 
 if __name__ == "__main__":
+    log = Logger(initialize=False)
+    log.initialize("fileIOTest", 1000, "logs", Logger.DEFAULT_MASK)
+    log.addEntry("Starting file IO test", Logger.INFO_MASK)
     runTest()
     test.printResults()

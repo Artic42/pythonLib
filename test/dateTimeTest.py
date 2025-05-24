@@ -1,12 +1,15 @@
-from articlib.testEngine import test
 import articlib.dateTime as dateTime
+from articlib.testEngine import testEngine
+from articlib.articLogger import Logger
+
+test = testEngine.getInstance()
 
 
 def runTest():
     print("Starting test for dateTime")
     runScenario1()
     runScenario2()
-    runScenatio3()
+    runScenario3()
     runScenario4()
     runScenario5()
     print("Finished test for dateTime")
@@ -38,7 +41,7 @@ def runScenario2():
     test.endScenario("Check setToString function in mode YYYYMMDD")
 
 
-def runScenatio3():
+def runScenario3():
     test.newScenario("Check setToString function in mode DDMMYYYY")
     date = dateTime.createDate(dateTime.DDMMYYYY)
     date.setToString("01/10/2020 10:10:10")
@@ -82,7 +85,7 @@ def test51():
     test.testIfEqual(
         dateTimeString,
         date.getDateTime(),
-        "Checking outputed in string format mode YYYYMMDD",
+        "Checking outputted in string format mode YYYYMMDD",
     )
 
 
@@ -93,7 +96,7 @@ def test52():
     test.testIfEqual(
         dateTimeString,
         date.getDateTime(),
-        "Checking outputed in string format mode DDMMYYYY",
+        "Checking outputted in string format mode DDMMYYYY",
     )
 
 
@@ -104,7 +107,7 @@ def test53():
     test.testIfEqual(
         dateTimeString,
         date.getDateTime(),
-        "Checking outputed in string format mode MMDDYYYY",
+        "Checking outputted in string format mode MMDDYYYY",
     )
 
 
@@ -114,8 +117,8 @@ def test54():
     date.setToString(dateTimeString)
     test.testIfEqual(
         "20201001_101010",
-        date.getDateTimePathFomat(),
-        "Checkingoutputed in path format on mode YYYYMMDDq",
+        date.getDateTimePathFormat(),
+        "Checking outputted in path format on mode YYYYMMDDq",
     )
 
 
@@ -125,8 +128,8 @@ def test55():
     date.setToString(dateTimeString)
     test.testIfEqual(
         "01102020_101010",
-        date.getDateTimePathFomat(),
-        "Checkingoutputed in path format on mode DDMMYYYY",
+        date.getDateTimePathFormat(),
+        "Checking outputted in path format on mode DDMMYYYY",
     )
 
 
@@ -136,11 +139,14 @@ def test56():
     date.setToString(dateTimeString)
     test.testIfEqual(
         "10012020_101010",
-        date.getDateTimePathFomat(),
-        "Checkingoutputed in path format on mode MMDDYYYY",
+        date.getDateTimePathFormat(),
+        "Checking outputted in path format on mode MMDDYYYY",
     )
 
 
 if __name__ == "__main__":
+    log = Logger(initialize=False)
+    log.initialize("dateTimeTest", 1000, "logs", Logger.DEFAULT_MASK)
+    log.addEntry("Starting dateTime test suite", Logger.INFO_MASK)
     runTest()
     test.printResults()

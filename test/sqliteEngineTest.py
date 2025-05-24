@@ -1,10 +1,13 @@
-from articlib.testEngine import test
 from articlib.sqliteEngine import sqliteEngine
 import articlib.articFileUtils as fileUtils
+from articlib.testEngine import testEngine
+from articlib.articLogger import Logger
 
 if fileUtils.fileExists("test.sqlite"):
     fileUtils.deleteFile("test.sqlite")  # Delete file if it exists
 sqliteEngine1 = sqliteEngine("test.sqlite")
+
+test = testEngine.getInstance()
 
 
 def runTest():
@@ -92,5 +95,8 @@ def test22():
 
 
 if __name__ == "__main__":
+    log = Logger(initialize=False)
+    log.initialize("sqliteEngineTest", 1000, "logs", Logger.DEFAULT_MASK)
+    log.addEntry("Starting sqlite engine test", Logger.INFO_MASK)
     runTest()
     test.printResults()

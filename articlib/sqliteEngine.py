@@ -1,6 +1,7 @@
 import sqlite3
-import articlib.articLogger as Logger
-from articlib.articLogger import log
+from articlib.articLogger import Logger
+
+log = Logger.getInstance()
 
 
 class sqliteEngine:
