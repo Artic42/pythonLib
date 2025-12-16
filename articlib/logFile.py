@@ -1,19 +1,19 @@
 import logging
-import articFileUtils as FU
+from articlib import articFileUtils as FU
 
 log = logging.getLogger()
 
 
 def logFile(path):
-    log.info("===============================")
+    log.info("===================================================")
     log.info("   Log contents of file")
     log.info(f"   Path: {path}")
-    log.info("===============================")
+    log.info("===================================================")
     if FU.fileExists(path):
-        FP = open(path, 'w')
+        FP = open(path, 'r')
         lines = FP.readlines()
         for line in lines:
-            log.info(line)
+            log.info(line[:-1])
     else:
         log.error("File doesn't exist")
-    log.info("===============================")
+    log.info("===================================================")
