@@ -7,10 +7,14 @@ def executeCommand(command):
 
 
 class command:
-    def __init__(self, command, run=True, capture=True, timeout=-1):
-        self.command = command
-        self.capture = capture
-        self.timeout = timeout
+    def __init__(self,
+                 command: str,
+                 run: bool = True,
+                 capture: bool = True,
+                 timeout: int = -1):
+        self.command: str = command
+        self.capture: bool = capture
+        self.timeout: int = timeout
         if run:
             self.run
 

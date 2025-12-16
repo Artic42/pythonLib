@@ -2,32 +2,32 @@ import os
 import shutil
 
 
-def deleteFile(path: str):
+def deleteFile(path: str) -> None:
     os.remove(path)
 
 
-def createFile(path: str):
+def createFile(path: str) -> None:
     file = open(path, "r")
     file.close()
 
 
-def copyFile(source: str, destination: str):
+def copyFile(source: str, destination: str) -> None:
     shutil.copy(source, destination)
 
 
-def fileExists(path: str):
+def fileExists(path: str) -> bool:
     return os.path.isfile(path)
 
 
-def getFilesInDirectory(path: str):
+def getFilesInDirectory(path: str) -> list[str]:
     return os.listdir(path)
 
 
-def deleteDirectory(path: str):
+def deleteDirectory(path: str) -> None:
     os.rmdir(path)
 
 
-def createDirectory(path: str):
+def createDirectory(path: str) -> None:
     os.makedirs(path, exist_ok=True)
 
 
@@ -69,7 +69,7 @@ class FileIO:
     def removeLastLine(self) -> None:
         del self.lines[-1]
 
-    def findLine(self, text: str) -> int:
+    def findLine(self, text: str) -> list[str]:
         result = []
         for i in range(len(self.lines)):
             if text in self.lines[i]:

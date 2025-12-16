@@ -54,26 +54,26 @@ class Logger:
         self.date = dateTime.createDate(dateTime.YYYYMMDD)
         self.createLogFile()
 
-    def createLogFile(self):
+    def createLogFile(self) -> None:
         self.date.setToNow()
         dateString = self.date.getDateTimePathFormat()
         os.makedirs(self.logPath, exist_ok=True)
-        self.logFilePath = self.logPath + "/" + self.logName + "_" + dateString + ".log"
+        self.logFilePath = f"{self.logPath}/{self.logName}_{dateString}.log"
         if os.path.isfile(self.logFilePath):
             self.logFile = open(self.logFilePath, "a")
         else:
             self.logFile = open(self.logFilePath, "w")
             self.logFile.write(
-                f"Log file created at {self.date.getDateTime()} with name {self.logName}\n"
+                (f"Log file created at"
+                 f" {self.date.getDateTime()}"
+                 f"with name {self.logName}\n")
             )
             self.lines = 0
 
-    def addEntry(self, message: str, mask: int = INFO_MASK, consoleOutput: bool = None):
-        try:
-            if consoleOutput is None:
-                consoleOutput = self.consoleOutput
-        except AttributeError:
-            consoleOutput = False
+    def addEntry(self,
+                 message: str,
+                 mask: int = INFO_MASK,
+                 consoleOutput: bool = True) -> None:
         if not self.init:
             return
         maskName = self.getMaskName(mask)
@@ -94,18 +94,22 @@ class Logger:
         }
         return switcher.get(mask, "UNKNOWN")
 
-    def writeLog(self, message, maskName, consoleOutput):
+    def writeLog(self,
+                 message: str,
+                 maskName: str,
+                 consoleOutput: bool = True) -> None:
         self.date.setToNow()
         dateString = self.date.getDateTime()
         self.lines += 1
         self.logFile.write(f"{dateString} - {maskName} - {message}\n")
         if consoleOutput:
-            self.outputToConsole(f"{dateString} - {maskName} - {message}", maskName)
+            self.outputToConsole(f"{dateString} - {maskName} - {message}",
+                                 maskName)
         if self.lines >= self.maxLines:
             self.logFile.close()
             self.createLogFile()
 
-    def outputToConsole(self, message, maskName):
+    def outputToConsole(self, message: str, maskName: str) -> None:
         if maskName == "WARN":
             printYellow(message)
         elif maskName == "ERROR":
@@ -113,28 +117,28 @@ class Logger:
         else:
             printGreen(message)
 
-    def setMask(self, mask):
+    def setMask(self, mask: int) -> None:
         self.mask = mask
 
-    def getMask(self):
+    def getMask(self) -> int:
         return self.mask
 
-    def setValueInMask(self, mask):
+    def setValueInMask(self, mask: int) -> None:
         self.mask = self.mask | mask
 
-    def unsetValueInMask(self, mask):
+    def unsetValueInMask(self, mask: int) -> None:
         self.mask = self.mask & ~mask
 
-    def flush(self):
+    def flush(self) -> None:
         self.logFile.flush()
 
-    def restartFile(self):
+    def restartFile(self) -> None:
         self.logFile.close()
         self.lines = 0
         self.createLogFile()
 
-    def getLogFilePath(self):
+    def getLogFilePath(self) -> str:
         return self.logFilePath
 
-    def close(self):
+    def close(self) -> None:
         self.logFile.close()

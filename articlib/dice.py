@@ -12,13 +12,14 @@ class dice:
         return random.randint(1, self.size)
 
 
-class customDice(dice):
+class customDice():
     def __init__(self, faces: list[str]) -> None:
-        self.faces = faces
-        self.size = len(faces)
+        self.faces: list[str] = faces
+        self.size: int = len(faces)
 
     def roll(self) -> str:
-        return random.choice(self.faces)
+        face: str = random.choice(self.faces)
+        return face
 
 
 class dicePool:
