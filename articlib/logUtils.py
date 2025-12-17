@@ -5,19 +5,24 @@ from articlib import articFileUtils as FU
 log = logging.getLogger()
 
 
-def logFile(path: str) -> None:
-    log.info("===================================================")
-    log.info("   Log contents of file")
-    log.info(f"   Path: {path}")
-    log.info("===================================================")
+def logFile(path: str, debugFlag: bool = False) -> None:
+    if debugFlag is True:
+        logFunc = log.debug
+    else:
+        logFunc = log.info
+
+    logFunc("===================================================")
+    logFunc("   Log contents of file")
+    logFunc(f"   Path: {path}")
+    logFunc("===================================================")
     if FU.fileExists(path):
         FP = open(path, "r")
         lines = FP.readlines()
         for line in lines:
-            log.info(line[:-1])
+            logFunc(line[:-1])
     else:
         log.error("File doesn't exist")
-    log.info("===================================================")
+    logFunc("===================================================")
 
 
 def logTestStart(title: str) -> None:

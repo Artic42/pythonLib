@@ -1,5 +1,5 @@
 import logging
-from articlib import logFile
+from articlib import logUtils
 
 log = logging.getLogger()
 
@@ -7,12 +7,7 @@ TEST_FILE = "test/files/testFile"
 
 
 def test_logFile():
-    log.info("===================================================")
-    log.info("  Log file test")
-    log.info("===================================================")
-    logFile.logFile(TEST_FILE)
-    log.info("===================================================")
-    log.info("  Test finished")
-    log.info("===================================================")
-    log.info("")
-    log.info("")
+    logUtils.logTestStart("Log file test")
+    logUtils.logFile(TEST_FILE)
+    logUtils.logFile(TEST_FILE, debugFlag = True)
+    logUtils.logTestEnd()
