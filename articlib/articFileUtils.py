@@ -14,7 +14,7 @@ def deleteFile(path: str) -> None:
 
 def createFile(path: str) -> None:
     logObj.debug(f"Create file on path {path}")
-    file = open(path, "r")
+    file = open(path, "w")
     file.close()
 
 
@@ -36,9 +36,18 @@ def deleteDirectory(path: str) -> None:
     os.rmdir(path)
 
 
+def deleteDirectoryTree(path: str) -> None:
+    logObj.debug(f"Remove entire directory tree in {path}")
+    shutil.rmtree(path)
+
+
 def createDirectory(path: str) -> None:
     logObj.debug(f"Create directory on {path}")
     os.makedirs(path, exist_ok=True)
+
+
+def directoryExists(path: str) -> bool:
+    return os.path.isdir(path)
 
 
 class FileIO:
