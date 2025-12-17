@@ -21,13 +21,8 @@ class createDate:
         self.calculateStringTime()
 
     def setTo(
-            self,
-            year: int,
-            month: int,
-            day: int,
-            hour: int,
-            minute: int,
-            second: int) -> None:
+        self, year: int, month: int, day: int, hour: int, minute: int, second: int
+    ) -> None:
         self.year = year
         self.month = month
         self.day = day
@@ -96,19 +91,16 @@ class createDate:
     def getDateTimePathFormat(self) -> str:
         if self.mode == YYYYMMDD:
             dateString = (
-                    str(self.year) +
-                    str(self.month).zfill(2) +
-                    str(self.day).zfill(2))
+                str(self.year) + str(self.month).zfill(2) + str(self.day).zfill(2)
+            )
         elif self.mode == DDMMYYYY:
             dateString = (
-                    str(self.day).zfill(2) +
-                    str(self.month).zfill(2) +
-                    str(self.year))
+                str(self.day).zfill(2) + str(self.month).zfill(2) + str(self.year)
+            )
         elif self.mode == MMDDYYYY:
             dateString = (
-                    str(self.month).zfill(2) +
-                    str(self.day).zfill(2) +
-                    str(self.year))
+                str(self.month).zfill(2) + str(self.day).zfill(2) + str(self.year)
+            )
         else:
             raise ValueError("Invalid mode")
         timeString = str(self.hour).zfill(2)

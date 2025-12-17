@@ -7,11 +7,9 @@ def executeCommand(command):
 
 
 class command:
-    def __init__(self,
-                 command: str,
-                 run: bool = True,
-                 capture: bool = True,
-                 timeout: int = -1):
+    def __init__(
+        self, command: str, run: bool = True, capture: bool = True, timeout: int = -1
+    ):
         self.command: str = command
         self.capture: bool = capture
         self.timeout: int = timeout
@@ -24,7 +22,7 @@ class command:
                 command, capture_output=self.capture, timeout=self.timeout
             )
         else:
-            self.runWithoutTimeout
+            self.runWithoutTimeout()
 
     def runWithoutTimeout(self):
         self.process = subprocess.run(command, capture_output=self.capture)

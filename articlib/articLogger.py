@@ -38,12 +38,14 @@ class Logger:
         self.logPath = ""
         self.mask = 0b0
 
-    def initialize(self,
-                   logName: str,
-                   maxLines: int = 1000,
-                   logPath: str = "logs",
-                   mask: int = DEFAULT_MASK,
-                   consoleOutput: bool = True):
+    def initialize(
+        self,
+        logName: str,
+        maxLines: int = 1000,
+        logPath: str = "logs",
+        mask: int = DEFAULT_MASK,
+        consoleOutput: bool = True,
+    ):
         self.consoleOutput = consoleOutput
         self.init = True
         self.logName = logName
@@ -64,16 +66,17 @@ class Logger:
         else:
             self.logFile = open(self.logFilePath, "w")
             self.logFile.write(
-                (f"Log file created at"
-                 f" {self.date.getDateTime()}"
-                 f"with name {self.logName}\n")
+                (
+                    f"Log file created at"
+                    f" {self.date.getDateTime()}"
+                    f"with name {self.logName}\n"
+                )
             )
             self.lines = 0
 
-    def addEntry(self,
-                 message: str,
-                 mask: int = INFO_MASK,
-                 consoleOutput: bool = True) -> None:
+    def addEntry(
+        self, message: str, mask: int = INFO_MASK, consoleOutput: bool = True
+    ) -> None:
         if not self.init:
             return
         maskName = self.getMaskName(mask)
@@ -94,17 +97,13 @@ class Logger:
         }
         return switcher.get(mask, "UNKNOWN")
 
-    def writeLog(self,
-                 message: str,
-                 maskName: str,
-                 consoleOutput: bool = True) -> None:
+    def writeLog(self, message: str, maskName: str, consoleOutput: bool = True) -> None:
         self.date.setToNow()
         dateString = self.date.getDateTime()
         self.lines += 1
         self.logFile.write(f"{dateString} - {maskName} - {message}\n")
         if consoleOutput:
-            self.outputToConsole(f"{dateString} - {maskName} - {message}",
-                                 maskName)
+            self.outputToConsole(f"{dateString} - {maskName} - {message}", maskName)
         if self.lines >= self.maxLines:
             self.logFile.close()
             self.createLogFile()

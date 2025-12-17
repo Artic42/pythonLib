@@ -156,7 +156,15 @@ class testEngine:
             log.addEntry("TEST PASSED", Logger.INFO_MASK, consoleOutput=False)
         else:
             log.addEntry("TEST FAILED", Logger.ERROR_MASK, consoleOutput=False)
-        log.addEntry(f"\t {self.passCount} passed\n", Logger.INFO_MASK, consoleOutput=False)
-        log.addEntry(f"\t {self.failCount} failed\n", Logger.INFO_MASK, consoleOutput=False)
-        log.addEntry(f"\t {self.skipCount} skipped\n", Logger.INFO_MASK, consoleOutput=False)
-        log.addEntry(f"\t {self.testCount} total\n", Logger.INFO_MASK, consoleOutput=False)
+        log.addEntry(
+            f"\t {self.passCount} passed\n", Logger.INFO_MASK, consoleOutput=False
+        )
+        log.addEntry(
+            f"\t {self.failCount} failed\n", Logger.INFO_MASK, consoleOutput=False
+        )
+        log.addEntry(
+            f"\t {self.skipCount} skipped\n", Logger.INFO_MASK, consoleOutput=False
+        )
+        log.addEntry(
+            f"\t {self.testCount} total\n", Logger.INFO_MASK, consoleOutput=False
+        )

@@ -23,7 +23,7 @@ class dice:
         return result
 
 
-class customDice():
+class customDice:
     def __init__(self, faces: list[str], name: str, log: bool = True) -> None:
         self.faces: list[str] = faces
         self.name: str = name

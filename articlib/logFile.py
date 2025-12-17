@@ -10,7 +10,7 @@ def logFile(path: str) -> None:
     log.info(f"   Path: {path}")
     log.info("===================================================")
     if FU.fileExists(path):
-        FP = open(path, 'r')
+        FP = open(path, "r")
         lines = FP.readlines()
         for line in lines:
             log.info(line[:-1])
