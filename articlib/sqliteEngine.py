@@ -1,7 +1,8 @@
 import sqlite3
-from articlib.articLogger import Logger
+import logging
 
-log = Logger.getInstance()
+
+log = logging.getLogger()
 
 
 class sqliteEngine:
@@ -10,7 +11,7 @@ class sqliteEngine:
         self.cursor = self.con.cursor()
 
     def executeCommand(self, command):
-        log.addEntry(f"Executing command: {command}", Logger.DEBUG_MASK)
+        log.debug(f"Executing command: {command}")
         self.cursor.execute(command)
 
     def createTable(self, name, columns):
@@ -36,19 +37,19 @@ class sqliteEngine:
     def readEntry(self, table, columns):
         self.executeCommand(f"SELECT {columns} FROM {table};")
         result = self.cursor.fetchall()
-        log.addEntry(f"Read entry: {result}", Logger.DEBUG_MASK)
+        log.debug(f"Read entry: {result}")
         return result
 
     def readNumberOfEntries(self, table):
         self.executeCommand(f"SELECT COUNT(*) FROM {table};")
         result = self.cursor.fetchall()
-        log.addEntry(f"Read number of entries: {result}", Logger.DEBUG_MASK)
+        log.debug(f"Read number of entries: {result}")
         return result[0][0]
 
     def readEntryFiltered(self, table, columns, filter):
         self.executeCommand(f"SELECT {columns} FROM {table} WHERE {filter};")
         result = self.cursor.fetchall()
-        log.addEntry(f"Read entry: {result}", Logger.DEBUG_MASK)
+        log.debug(f"Read entry: {result}")
         return result
 
     def entryExistsOnTable(self, table, condition):
