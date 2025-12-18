@@ -56,9 +56,11 @@ class FileIO:
         self.path = path
         if self.log is True:
             logObj.debug(f"Create FileIO object with path {self.path}")
-        if readIt:
+        if readIt is True:
+            logObj.info(f"Reading content in path {self.path}")
             self.readFile()
         else:
+            logObj.info("Load file as empty without reading")
             self.lines = []
 
     def readFile(self) -> None:
