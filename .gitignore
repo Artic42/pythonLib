@@ -8,4 +8,5 @@ testFile
 testDri/*
 dist/
 logs/
+temp/
 
