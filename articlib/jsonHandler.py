@@ -2,6 +2,7 @@ import json
 import socket
 import logging
 import mmap
+from typing import Any
 from datetime import datetime
 
 
@@ -14,11 +15,11 @@ class JsonFile:
                  size: int = 1024,
                  read: bool = False,
                  write: bool = False) -> None:
-        self.clock = datetime.now()
-        self.content = {}
+        self.clock: datetime = datetime.now()
+        self.content: dict[str, Any] = {}
         self._setHostname()
-        self.read = read
-        self.write = write
+        self.read: bool = read
+        self.write: bool = write
 
         if read is False and write is False:
             msg = "No mode selected at class creation"
@@ -39,15 +40,17 @@ class JsonFile:
         self.path = path
 
         if write is True:
-            self.filePtr = open(path, "wb")
-            self.filePtr.write(b"\x00" * size)
-            self.filePtr.close()
+            filePtr = open(path, "wb")
+            filePtr.write(b"\x00" * size)
+            filePtr.close()
+            del filePtr
 
         if read is True:
-            self.filePtr = open(path, "r+b")
-            self.filePtr.seek(size-1)
-            self.filePtr.write(b"\x00")
-            self.filePtr.close()
+            filePtr2 = open(path, "r+b")
+            filePtr2.seek(size-1)
+            filePtr2.write(b"\x00")
+            filePtr2.close()
+            del filePtr2
 
         self.filePtr = open(path, "r+b")
         self.fmap = mmap.mmap(self.filePtr.fileno(), size)
@@ -81,7 +84,7 @@ class JsonFile:
         json.dump(self.content, FilePtr, indent=4)
         FilePtr.close()
 
-    def writeData(self, data: dict) -> int:
+    def writeData(self, data: dict[str, Any]) -> int:
         if self.write is False:
             log.error("File was open without write mode and can't be written")
             return 3

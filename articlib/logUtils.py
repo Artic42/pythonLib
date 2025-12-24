@@ -1,5 +1,5 @@
 import logging
-from articlib import articFileUtils as FU
+import articFileUtils as FU
 
 
 log = logging.getLogger()

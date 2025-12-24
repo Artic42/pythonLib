@@ -1,7 +1,7 @@
 import os
 import shutil
 import logging
-from articlib import logUtils as LU
+import logUtils as LU
 
 
 logObj = logging.getLogger()
@@ -61,7 +61,7 @@ class FileIO:
             self.readFile()
         else:
             logObj.info("Load file as empty without reading")
-            self.lines = []
+            self.lines: list[str] = []
 
     def readFile(self) -> None:
         filePointer = open(self.path, "r")
@@ -113,8 +113,8 @@ class FileIO:
             logObj.debug(f"Removed content is {self.lines[-1]}")
         del self.lines[-1]
 
-    def findLine(self, text: str) -> list[str]:
-        result = []
+    def findLine(self, text: str) -> list[int]:
+        result: list[int] = []
         for i in range(len(self.lines)):
             if text in self.lines[i]:
                 result.append(i)

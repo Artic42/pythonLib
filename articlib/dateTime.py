@@ -6,7 +6,7 @@ MMDDYYYY = 3
 
 
 class createDate:
-    def __init__(self, mode) -> None:
+    def __init__(self, mode: int) -> None:
         self.mode = mode
 
     def setToNow(self) -> None:
